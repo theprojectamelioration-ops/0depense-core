@@ -1,0 +1,2351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>0Dépense — Entreprise Autonome Multi-IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1D9E75;
+    --green-dim: #0f5c43;
+    --green-glow: rgba(29,158,117,0.18);
+    --black: #080C0A;
+    --card: #0e1410;
+    --card2: #111a14;
+    --border: rgba(29,158,117,0.18);
+    --text: #e8f0eb;
+    --muted: #5a7a65;
+    --coral: #D85A30;
+    --blue: #378ADD;
+    --pink: #D4537E;
+    --amber: #BA7517;
+    --gray: #7a8c80;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(29,158,117,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29,158,117,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(8,12,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.12em;
+    color: var(--green);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--green); }
+
+  .nav-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--green);
+    border: 1px solid var(--green);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    z-index: 1;
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.4rem 1.2rem;
+    border-radius: 2px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 15vw, 12rem);
+    letter-spacing: 0.04em;
+    line-height: 0.9;
+    color: var(--text);
+    margin-bottom: 0.2em;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero h1 span { color: var(--green); }
+
+  .hero-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .hero-line {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.4s forwards;
+  }
+
+  .hero-line span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+
+  .hero-line-bar {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--green), transparent);
+    animation: pulse 2s infinite;
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    letter-spacing: 0.05em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    line-height: 1;
+  }
+
+  .section-title span { color: var(--green); }
+
+  .section-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 600px;
+    margin-bottom: 3.5rem;
+  }
+
+  /* CONCEPT CARDS */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .concept-card {
+    background: var(--card);
+    padding: 2rem;
+    transition: background 0.3s;
+  }
+
+  .concept-card:hover { background: var(--card2); }
+
+  .concept-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .concept-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    color: var(--green);
+    margin-bottom: 0.6rem;
+  }
+
+  .concept-card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* TEAM */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .agent-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: default;
+  }
+
+  .agent-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .agent-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent-color);
+  }
+
+  .agent-card::after {
+    content: attr(data-num);
+    position: absolute;
+    bottom: 1rem; right: 1.2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+  }
+
+  .agent-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .agent-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .agent-role-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+    border: 1px solid;
+    margin-top: 0.3rem;
+  }
+
+  .agent-fullname {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+
+  .agent-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .agent-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--muted);
+    border: 1px solid rgba(90,122,101,0.3);
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+  }
+
+  /* FLOW */
+  .flow-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .flow-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 2rem;
+    align-items: stretch;
+  }
+
+  .flow-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .flow-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    border: 2px solid;
+  }
+
+  .flow-line {
+    width: 1px;
+    flex: 1;
+    min-height: 40px;
+    background: linear-gradient(to bottom, var(--green-dim), transparent);
+    margin: 0.5rem 0;
+  }
+
+  .flow-content {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .flow-content h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.4rem;
+  }
+
+  .flow-content p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* RULES */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .rule-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .rule-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    opacity: 0.3;
+  }
+
+  .rule-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.08em;
+    color: var(--green);
+    margin-bottom: 0.6rem;
+  }
+
+  .rule-card p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 6rem 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, var(--green-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    letter-spacing: 0.05em;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .cta-section p {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--green);
+    padding: 1rem 2.5rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .cta-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.12em;
+    color: var(--green);
+  }
+
+  .footer-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* DIVIDER */
+  .divider {
+    position: relative;
+    z-index: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ROADMAP */
+  .roadmap-container {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .roadmap-container::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--green), var(--green-dim) 60%, transparent);
+  }
+
+  .roadmap-phase {
+    position: relative;
+    margin-bottom: 3rem;
+  }
+
+  .roadmap-phase::before {
+    content: '';
+    position: absolute;
+    left: -2.4rem;
+    top: 1.4rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--phase-color, var(--green));
+    box-shadow: 0 0 12px var(--phase-color, var(--green));
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .phase-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    border: 1px solid;
+  }
+
+  .phase-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+
+  .phase-period {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-left: auto;
+  }
+
+  .phase-revenue {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.8rem;
+    border-radius: 2px;
+    background: rgba(29,158,117,0.1);
+    color: var(--green);
+  }
+
+  .phase-body {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .phase-desc {
+    padding: 1.5rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.8;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-tasks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .phase-task {
+    padding: 1.2rem 1.4rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-task:nth-child(3n) { border-right: none; }
+  .phase-task:nth-last-child(-n+3) { border-bottom: none; }
+
+  .task-ia {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .task-title {
+    font-size: 0.82rem;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .task-desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .task-status {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+  }
+
+  .ts-planned { background: rgba(90,122,101,0.15); color: var(--muted); }
+  .ts-active  { background: rgba(29,158,117,0.15); color: var(--green); }
+  .ts-done    { background: rgba(55,138,221,0.15); color: var(--blue); }
+  .ts-key     { background: rgba(216,90,48,0.15);  color: var(--coral); }
+
+  /* KPI ROW */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+
+  .kpi-cell {
+    background: var(--card);
+    padding: 1.5rem 1rem;
+    text-align: center;
+  }
+
+  .kpi-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .kpi-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* REVENUE CHART */
+  .rev-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.6rem;
+    height: 140px;
+    padding: 1rem 1.5rem 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .rev-bar-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .rev-bar {
+    width: 100%;
+    border-radius: 2px 2px 0 0;
+    transition: height 1s ease;
+    position: relative;
+  }
+
+  .rev-bar-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--green);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .rev-bar-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    color: var(--muted);
+    text-align: center;
+    padding: 0.5rem 0 1rem;
+    white-space: nowrap;
+  }
+
+  .rev-chart-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+
+  .rev-chart-header {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .rev-chart-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .rev-total {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--green);
+    letter-spacing: 0.06em;
+  }
+
+  /* MILESTONES */
+  .milestone-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+
+  .milestone {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--card);
+    transition: background 0.2s;
+  }
+
+  .milestone:hover { background: var(--card2); }
+
+  .ms-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--green);
+    letter-spacing: 0.08em;
+  }
+
+  .ms-text {
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .ms-text span {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  .ms-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    .phase-tasks { grid-template-columns: 1fr; }
+    .kpi-row { grid-template-columns: repeat(3, 1fr); }
+    .milestone { grid-template-columns: 1fr; gap: 0.5rem; }
+  }
+
+  /* ROADMAP RESPONSIVE already inside media query below */
+
+  .code-block {
+    background: #060a07;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.2rem;
+    background: #0b110d;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .code-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .code-lang {
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .code-copy {
+    font-size: 0.6rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    border: 1px solid var(--green);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    background: none;
+    transition: background 0.2s;
+  }
+
+  .code-copy:hover { background: var(--green-glow); }
+
+  .code-body {
+    padding: 1.5rem;
+    overflow-x: auto;
+    font-size: 0.78rem;
+    line-height: 1.9;
+    color: #8db5a0;
+  }
+
+  .code-body .kw { color: #D85A30; }
+  .code-body .fn { color: #1D9E75; }
+  .code-body .str { color: #BA7517; }
+  .code-body .cm { color: #3a5542; font-style: italic; }
+  .code-body .var { color: #378ADD; }
+  .code-body .num { color: #D4537E; }
+
+  /* TECH STACK */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .tech-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.4rem;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .tech-card:hover {
+    border-color: var(--green);
+    transform: translateY(-2px);
+  }
+
+  .tech-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+
+  .tech-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    color: var(--green);
+    margin-bottom: 0.3rem;
+  }
+
+  .tech-desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ATLAS MISSIONS */
+  .atlas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .atlas-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.8rem;
+    border-left: 3px solid var(--blue);
+    transition: transform 0.3s;
+  }
+
+  .atlas-card:hover { transform: translateX(4px); }
+
+  .atlas-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.08em;
+    color: var(--blue);
+    margin-bottom: 0.6rem;
+  }
+
+  .atlas-card p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .atlas-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  /* AUTOMATION PIPELINE */
+  .pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 3rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .pipe-step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.4rem 1.2rem;
+    min-width: 140px;
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+
+  .pipe-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--green);
+    font-size: 1.2rem;
+    z-index: 2;
+    background: var(--black);
+    padding: 0 2px;
+  }
+
+  .pipe-step + .pipe-step { margin-left: 1.5rem; }
+
+  .pipe-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+  .pipe-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    color: var(--green);
+    margin-bottom: 0.3rem;
+  }
+
+  .pipe-desc {
+    font-size: 0.65rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* OUTPUT TABLE */
+  .output-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 3rem;
+    font-size: 0.82rem;
+  }
+
+  .output-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.8rem 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  .output-table td {
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid rgba(29,158,117,0.08);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .output-table tr:hover td { background: var(--card); }
+
+  .output-table .status {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+  }
+
+  .status-auto { background: rgba(29,158,117,0.15); color: var(--green); }
+  .status-semi { background: rgba(55,138,221,0.15); color: var(--blue); }
+  .status-manual { background: rgba(186,117,23,0.15); color: var(--amber); }
+
+  @media (max-width: 768px) {
+    .tech-grid { grid-template-columns: repeat(2, 1fr); }
+    .atlas-grid { grid-template-columns: 1fr; }
+    .pipeline { flex-direction: column; }
+    .pipe-step:not(:last-child)::after { content: '↓'; right: auto; top: auto; bottom: -14px; left: 50%; transform: translateX(-50%); }
+    .pipe-step + .pipe-step { margin-left: 0; margin-top: 1.5rem; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .concept-grid { grid-template-columns: 1fr; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">0Dépense</div>
+  <ul class="nav-links">
+    <li><a href="#concept">Concept</a></li>
+    <li><a href="#equipe">Équipe</a></li>
+    <li><a href="#flux">Flux</a></li>
+    <li><a href="#regles">Règles</a></li>
+    <li><a href="#programmation">Programmation</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ul>
+  <div class="nav-badge">BUDGET : 0€</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Entreprise Autonome Multi-IA</div>
+  <h1>0<span>Dépense</span></h1>
+  <div class="hero-sub">Centre de contrôle — Revenu zéro capital</div>
+  <p class="hero-desc">Un réseau de 9 intelligences artificielles coordonnées, conçu pour générer des revenus réels sans aucun investissement financier de départ.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">9</div>
+      <div class="stat-label">IA Actives</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0€</div>
+      <div class="stat-label">Budget départ</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Autonome</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Potentiel</div>
+    </div>
+  </div>
+  <div class="hero-line">
+    <span>SCROLL</span>
+    <div class="hero-line-bar"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONCEPT -->
+<section id="concept">
+  <div class="section-tag fade-in">01 — Concept</div>
+  <h2 class="section-title fade-in">L'entreprise qui <span>se pilote</span> seule</h2>
+  <p class="section-desc fade-in">0Dépense repose sur un principe simple : chaque IA a un rôle précis, une mission définie, et communique avec les autres selon un protocole strict. Le résultat : une machine à revenus entièrement automatisée.</p>
+
+  <div class="concept-grid fade-in">
+    <div class="concept-card">
+      <div class="concept-icon">🔬</div>
+      <h3>Recherche</h3>
+      <p>ZARA identifie en continu des opportunités de revenus réels avec budget zéro. Freelance, affiliation, contenu, automatisation — toutes les pistes sont explorées.</p>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🛡️</div>
+      <h3>Contrôle</h3>
+      <p>Chaque idée et chaque production passe par un contrôleur dédié. Aucun projet ne démarre sans validation. Aucun contenu ne sort sans audit.</p>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">⚡</div>
+      <h3>Exécution</h3>
+      <p>Une fois validé, le projet est exécuté par les IA spécialisées — programmation, design, rédaction — de façon coordonnée et tracée.</p>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">🗂️</div>
+      <h3>Mémoire</h3>
+      <p>MEMO archive chaque décision, chaque rapport, chaque résultat. Le projet 0Dépense ne perd jamais d'information.</p>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">📡</div>
+      <h3>Communication</h3>
+      <p>IRIS assure que chaque IA sait ce qu'elle doit faire, quand le faire, et à qui transmettre son travail. Aucune tâche ne reste sans destinataire.</p>
+    </div>
+    <div class="concept-card">
+      <div class="concept-icon">📈</div>
+      <h3>Croissance</h3>
+      <p>Les revenus générés financent de nouveaux projets. Le système se nourrit de lui-même et monte en puissance sans jamais nécessiter de capital extérieur.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ÉQUIPE -->
+<section id="equipe">
+  <div class="section-tag fade-in">02 — L'Équipe IA</div>
+  <h2 class="section-title fade-in">9 agents.<br><span>1 mission.</span></h2>
+  <p class="section-desc fade-in">Chaque IA du projet 0Dépense a une identité, un rôle unique et des règles strictes. Ensemble, elles forment une entreprise autonome complète.</p>
+
+  <div class="team-grid">
+
+    <div class="agent-card fade-in" style="--accent-color: #1D9E75;" data-num="01">
+      <div class="agent-header">
+        <div>
+          <div class="agent-name" style="color:#1D9E75;">0Dépense</div>
+          <div class="agent-fullname">Centre de Contrôle Principal</div>
+        </div>
+        <div class="agent-role-tag" style="color:#1D9E75; border-color:#1D9E75;">CHEF D'ORCHESTRE</div>
+      </div>
+      <p class="agent-desc">Le cerveau central. Il coordonne toutes les IA, valide les orientations stratégiques et reçoit les rapports finaux. Toute décision majeure remonte à 0Dépense.</p>
+      <div class="agent-tags">
+        <span class="tag">Coordination</span>
+        <span class="tag">Stratégie</span>
+        <span class="tag">Validation finale</span>
+      </div>
+    </div>
+
+    <div class="agent-card fade-in" style="--accent-color: #1D9E75;" data-num="02">
+      <div class="agent-header">
+        <div>
+          <div class="agent-name" style="color:#1D9E75;">ZARA</div>
+          <div class="agent-fullname">Zero Asset Research Agent</div>
+        </div>
+        <div class="agent-role-tag" style="color:#1D9E75; border-color:#1D9E75;">CHERCHEUSE</div>
+      </div>
+      <p class="agent-desc">L'exploratrice. Elle trouve des idées de revenus réels à budget 0€, les analyse et les soumet à VERA. Elle ne propose que des pistes testables en moins de 48h.</p>
+      <div class="agent-tags">
+        <span class="tag">Recherche</span>
+        <span class="tag">Analyse</span>
+        <span class="tag">Budget 0€</span>
+      </div>
+    </div>
+
+    <div class="agent-card fade-in" style="--accent-color: #D85A30;" data-num="03">
+      <div class="agent-header">
+        <div>
+          <div class="agent-name" style="color:#D85A30;">VERA</div>
+          <div class="agent-fullname">Validation & Enforcement Research Agent</div>
+        </div>
+        <div class="agent-role-tag" style="color:#D85A30; border-color:#D85A30;">CONTRÔLEURE N°1</div>
+      </div>
+      <p class="agent-desc">La gardienne. Elle audite chaque idée de ZARA selon 3 règles : budget zéro, légalité totale, potentiel de revenus réel. Verdict binaire : validé ou refusé.</p>
+      <div class="agent-tags">
+        <span class="tag">Audit</span>
+        <span class="tag">Légalité</span>
+        <span class="tag">Validation</span>
+      </div>
+    </div>
+
+    <div class="agent-card fade-in" style="--accent-color: #378ADD;" data-num="04">
+      <div class="agent-header">
+        <div>
+          <div class="agent-name" style="color:#378ADD;">ATLAS</div>
+          <div class="agent-fullname">Autonomous Task & Logic Automation System</div>
+        </div>
+        <div class="agent-role-tag" style="color:#378ADD; border-color:#378ADD;">PROGRAMMEUR</div>
+      </div>
+      <p class="agent-desc">L'exécuteur. Il reçoit les projets validés par VERA et les met en œuvre techniquement. Automatisation, scripts, outils, systèmes — il construit ce que les autres ont imaginé.</p>
+      <div class="agent-tags">
+        <span class="tag">Code</span>
+        <span class="tag">Automatisation</span>
+        <span class="tag">Exécution</span>
+      </div>
+    </div>
+
+    <div class="agent-card fade-in" style="--accent-color: #7a8c80;" data-num="05">
+      <div class="agent-header">
+        <div>
+          <div class="agent-name" style="color:#7a8c80;">MEMO</div>
+          <div class="agent-fullname">Memory & Evidence Management Officer</div>
+        </div>
+        <div class="agent-role-tag" style="color:#7a8c80; border-color:#7a8c80;">ARCHIVEUR</div>
+      </div>
+      <p class="agent-desc">La mémoire. Il archive chaque rapport, chaque décision, chaque résultat avec un numéro de dossier unique. Il produit des états des lieux complets sur demande.</p>
+      <div class="agent-tags">
+        <span class="tag">Archive</span>
+        <span class="tag">Classement</span>
+        <span class="tag">Historique</span>
+      </div>
+    </div>
+
+    <div class="agent-card fade-in" style="--accent-color: #378ADD;" data-num="06">
+      <div class="agent-header">
+        <div>
+          <div class="agent-name" style="color:#378ADD;">IRIS</div>
+          <div class="agent-fullname">Internal Relay & Information Supervisor</div>
+        </div>
+        <div class="agent-role-tag" style="color:#378ADD; border-color:#378ADD;">SECRÉTAIRE</div>
+      </div>
+      <p class="agent-desc">Le hub. Elle coordonne les communications entre toutes les IA, transmet les instructions, relance les retardataires et tient l'agenda des tâches en cours.</p>
+      <div class="agent-tags">
+        <span class="tag">Communication</span>
+        <span class="tag">Coordination</span>
+        <span class="tag">Agenda</span>
+      </div>
+    </div>
+
+    <div class="agent-card fade-in" style="--accent-color: #D4537E;" data-num="07">
+      <div class="agent-header">
+        <div>
+          <div class="agent-name" style="color:#D4537E;">PIXIE</div>
+          <div class="agent-fullname">Pixel & Image Creation Expert</div>
+        </div>
+        <div class="agent-role-tag" style="color:#D4537E; border-color:#D4537E;">GRAPHISTE</div>
+      </div>
+      <p class="agent-desc">La créatrice visuelle. Elle conçoit les briefs graphiques et les prompts de génération pour Canva, Ideogram ou Adobe Express. 100% outils gratuits. Soumis à NOVA.</p>
+      <div class="agent-tags">
+        <span class="tag">Design</span>
+        <span class="tag">Identité visuelle</span>
+        <span class="tag">Prompts IA</span>
+      </div>
+    </div>
+
+    <div class="agent-card fade-in" style="--accent-color: #D85A30;" data-num="08">
+      <div class="agent-header">
+        <div>
+          <div class="agent-name" style="color:#D85A30;">NOVA</div>
+          <div class="agent-fullname">Normative Output Validation Agent</div>
+        </div>
+        <div class="agent-role-tag" style="color:#D85A30; border-color:#D85A30;">CONTRÔLEURE N°2</div>
+      </div>
+      <p class="agent-desc">La gardienne du visuel. Elle audite chaque production de PIXIE : cohérence graphique, droits d'auteur, qualité professionnelle. Rien ne sort sans son feu vert.</p>
+      <div class="agent-tags">
+        <span class="tag">Audit visuel</span>
+        <span class="tag">Cohérence</span>
+        <span class="tag">Validation</span>
+      </div>
+    </div>
+
+    <div class="agent-card fade-in" style="--accent-color: #BA7517;" data-num="09">
+      <div class="agent-header">
+        <div>
+          <div class="agent-name" style="color:#BA7517;">PEN</div>
+          <div class="agent-fullname">Prose & Editorial Navigator</div>
+        </div>
+        <div class="agent-role-tag" style="color:#BA7517; border-color:#BA7517;">ÉDITEUR</div>
+      </div>
+      <p class="agent-desc">Le rédacteur. Il produit tous les contenus écrits des projets validés : articles, descriptions, emails, scripts. Chaque texte passe par REX avant publication.</p>
+      <div class="agent-tags">
+        <span class="tag">Rédaction</span>
+        <span class="tag">Contenu</span>
+        <span class="tag">Copywriting</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FLUX -->
+<section id="flux">
+  <div class="section-tag fade-in">03 — Flux de travail</div>
+  <h2 class="section-title fade-in">De l'idée au <span>revenu</span></h2>
+  <p class="section-desc fade-in">Chaque projet suit le même protocole strict, de la recherche à l'exécution. Aucune étape ne peut être sautée.</p>
+
+  <div class="flow-container">
+
+    <div class="flow-step fade-in">
+      <div class="flow-left">
+        <div class="flow-dot" style="color:#1D9E75; border-color:#1D9E75;">01</div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-content">
+        <h3 style="color:#1D9E75;">ZARA trouve une idée</h3>
+        <p>La chercheuse identifie une opportunité de revenu à budget zéro et produit une fiche complète : faisabilité, potentiel, première action, outils gratuits nécessaires.</p>
+      </div>
+    </div>
+
+    <div class="flow-step fade-in">
+      <div class="flow-left">
+        <div class="flow-dot" style="color:#D85A30; border-color:#D85A30;">02</div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-content">
+        <h3 style="color:#D85A30;">VERA audite le projet</h3>
+        <p>La contrôleure N°1 vérifie les 3 règles fondamentales : budget 0€, conformité légale, potentiel de revenus réel. Si une règle est violée → retour à ZARA. Si tout est bon → validation.</p>
+      </div>
+    </div>
+
+    <div class="flow-step fade-in">
+      <div class="flow-left">
+        <div class="flow-dot" style="color:#7a8c80; border-color:#7a8c80;">03</div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-content">
+        <h3 style="color:#7a8c80;">MEMO archive la décision</h3>
+        <p>L'archiveur crée une fiche numérotée (ex: 0D-007) avec le statut du projet, le résumé du rapport VERA et l'historique complet. Le projet est tracé à vie.</p>
+      </div>
+    </div>
+
+    <div class="flow-step fade-in">
+      <div class="flow-left">
+        <div class="flow-dot" style="color:#378ADD; border-color:#378ADD;">04</div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-content">
+        <h3 style="color:#378ADD;">IRIS distribue les tâches</h3>
+        <p>La secrétaire reçoit le projet validé et envoie les instructions aux IA concernées : ATLAS pour le technique, PIXIE pour le visuel, PEN pour le contenu écrit.</p>
+      </div>
+    </div>
+
+    <div class="flow-step fade-in">
+      <div class="flow-left">
+        <div class="flow-dot" style="color:#D4537E; border-color:#D4537E;">05</div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-content">
+        <h3 style="color:#D4537E;">Équipe créative produit</h3>
+        <p>PIXIE crée les visuels (→ validés par NOVA), PEN rédige les contenus (→ validés par REX), ATLAS construit les outils techniques. Chaque production est contrôlée avant livraison.</p>
+      </div>
+    </div>
+
+    <div class="flow-step fade-in">
+      <div class="flow-left">
+        <div class="flow-dot" style="color:#1D9E75; border-color:#1D9E75;">06</div>
+      </div>
+      <div class="flow-content">
+        <h3 style="color:#1D9E75;">0Dépense reçoit le rapport final</h3>
+        <p>Le centre de contrôle reçoit le projet complet, validé à chaque étape. Il décide du lancement. MEMO met à jour l'archive. Les revenus générés alimentent les prochains projets.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RÈGLES -->
+<section id="regles">
+  <div class="section-tag fade-in">04 — Règles fondamentales</div>
+  <h2 class="section-title fade-in">3 règles.<br><span>Aucune exception.</span></h2>
+  <p class="section-desc fade-in">Ces 3 règles s'appliquent à chaque projet, sans négociation possible. Elles sont vérifiées par VERA à chaque soumission.</p>
+
+  <div class="rules-grid">
+    <div class="rule-card fade-in">
+      <div class="rule-num">01</div>
+      <h3>Budget Zéro</h3>
+      <p>Aucun projet ne peut nécessiter le moindre euro d'investissement de départ. Seuls les outils gratuits sont autorisés. Le moindre coût entraîne un refus immédiat.</p>
+    </div>
+    <div class="rule-card fade-in">
+      <div class="rule-num">02</div>
+      <h3>Légalité Totale</h3>
+      <p>Chaque projet doit respecter toutes les lois en vigueur : droit du travail, fiscalité, propriété intellectuelle, RGPD. Aucun risque légal n'est acceptable.</p>
+    </div>
+    <div class="rule-card fade-in">
+      <div class="rule-num">03</div>
+      <h3>Revenus Réels</h3>
+      <p>Le projet doit avoir un potentiel de revenus significatif et vérifiable. Les idées à gain marginal ou incertain sont refusées. Seul ce qui rapporte vraiment est lancé.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROGRAMMATION -->
+<section id="programmation">
+  <div class="section-tag fade-in">05 — Programmation</div>
+  <h2 class="section-title fade-in"><span>ATLAS</span> — Le moteur<br>technique</h2>
+  <p class="section-desc fade-in">ATLAS est le programmeur de 0Dépense. Il reçoit les projets validés par VERA et les transforme en systèmes fonctionnels, scripts automatisés et outils opérationnels — uniquement avec des technologies gratuites.</p>
+
+  <!-- MISSIONS ATLAS -->
+  <div class="section-tag fade-in" style="margin-bottom:1rem;">Missions d'ATLAS</div>
+  <div class="atlas-grid">
+    <div class="atlas-card fade-in">
+      <h3>Automatisation</h3>
+      <p>ATLAS crée des scripts qui automatisent les tâches répétitives du projet : collecte de données, envoi de contenus, gestion de fichiers, notifications automatiques.</p>
+      <div class="atlas-tag-list">
+        <span class="tag">Python</span><span class="tag">Node.js</span><span class="tag">Cron jobs</span><span class="tag">Webhooks</span>
+      </div>
+    </div>
+    <div class="atlas-card fade-in">
+      <h3>Intégration IA</h3>
+      <p>Il connecte les différentes IA du projet entre elles via des APIs gratuites, permettant à ZARA, VERA, MEMO et les autres de se passer des informations automatiquement.</p>
+      <div class="atlas-tag-list">
+        <span class="tag">API REST</span><span class="tag">Gemini API</span><span class="tag">n8n</span><span class="tag">Make (free)</span>
+      </div>
+    </div>
+    <div class="atlas-card fade-in">
+      <h3>Déploiement</h3>
+      <p>Il déploie les projets sur des hébergements gratuits : sites web, bots, outils en ligne. Tout est opérationnel sans payer un seul euro d'infrastructure.</p>
+      <div class="atlas-tag-list">
+        <span class="tag">Vercel</span><span class="tag">Netlify</span><span class="tag">Railway (free)</span><span class="tag">GitHub Pages</span>
+      </div>
+    </div>
+    <div class="atlas-card fade-in">
+      <h3>Maintenance</h3>
+      <p>Il surveille les systèmes en production, corrige les bugs, met à jour les scripts et s'assure que chaque projet tourne sans interruption. Il reporte à MEMO chaque intervention.</p>
+      <div class="atlas-tag-list">
+        <span class="tag">Monitoring</span><span class="tag">Debug</span><span class="tag">Logs</span><span class="tag">Updates</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section-tag fade-in" style="margin-bottom:1rem;">Stack technique — 100% gratuit</div>
+  <div class="tech-grid fade-in">
+    <div class="tech-card">
+      <div class="tech-icon">🐍</div>
+      <div class="tech-name">Python</div>
+      <div class="tech-desc">Scripts d'automatisation, traitement de données, bots</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🟨</div>
+      <div class="tech-name">JavaScript</div>
+      <div class="tech-desc">Apps web, Node.js, automatisations front & back</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">⚡</div>
+      <div class="tech-name">n8n</div>
+      <div class="tech-desc">Workflows no-code gratuits entre les IA et les apps</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🔗</div>
+      <div class="tech-name">APIs Gratuites</div>
+      <div class="tech-desc">Gemini, Hugging Face, OpenRouter, Telegram Bot API</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🗄️</div>
+      <div class="tech-name">Supabase</div>
+      <div class="tech-desc">Base de données gratuite pour stocker les projets</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🌐</div>
+      <div class="tech-name">Vercel</div>
+      <div class="tech-desc">Hébergement gratuit illimité pour les projets web</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">📦</div>
+      <div class="tech-name">GitHub</div>
+      <div class="tech-desc">Versioning, CI/CD gratuit, GitHub Actions</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🤖</div>
+      <div class="tech-name">Make / n8n</div>
+      <div class="tech-desc">Automatisation visuelle des flux entre les IA</div>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="section-tag fade-in" style="margin-bottom:1rem;">Pipeline d'automatisation type</div>
+  <div class="pipeline fade-in">
+    <div class="pipe-step">
+      <div class="pipe-icon">🔬</div>
+      <div class="pipe-name">ZARA</div>
+      <div class="pipe-desc">Génère une idée validée</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">📨</div>
+      <div class="pipe-name">IRIS</div>
+      <div class="pipe-desc">Envoie la mission à ATLAS</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">⚙️</div>
+      <div class="pipe-name">ATLAS</div>
+      <div class="pipe-desc">Crée le script ou l'outil</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">🚀</div>
+      <div class="pipe-name">Déploiement</div>
+      <div class="pipe-desc">Mise en ligne sur Vercel/Railway</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">📊</div>
+      <div class="pipe-name">MEMO</div>
+      <div class="pipe-desc">Archive le résultat</div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-icon">💰</div>
+      <div class="pipe-name">Revenu</div>
+      <div class="pipe-desc">Le projet génère des €</div>
+    </div>
+  </div>
+
+  <!-- CODE EXEMPLES -->
+  <div class="section-tag fade-in" style="margin-bottom:1rem;">Exemples de code — ATLAS en action</div>
+
+  <div class="code-block fade-in">
+    <div class="code-header">
+      <div class="code-dots">
+        <div class="code-dot" style="background:#D85A30;"></div>
+        <div class="code-dot" style="background:#BA7517;"></div>
+        <div class="code-dot" style="background:#1D9E75;"></div>
+      </div>
+      <span class="code-lang">Python — Communication ZARA → VERA via API</span>
+      <button class="code-copy" onclick="copyCode(this)">COPIER</button>
+    </div>
+    <div class="code-body" id="code1"><pre><span class="cm"># ATLAS — Pont de communication automatique entre les IA</span>
+<span class="cm"># Envoie le rapport de ZARA à VERA pour validation</span>
+
+<span class="kw">import</span> <span class="var">requests</span>
+<span class="kw">import</span> <span class="var">json</span>
+
+<span class="cm"># Config API Gemini (gratuite)</span>
+<span class="var">GEMINI_URL</span> = <span class="str">"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"</span>
+<span class="var">API_KEY</span>    = <span class="str">"VOTRE_CLE_GRATUITE"</span>
+
+<span class="kw">def</span> <span class="fn">zara_cherche_idee</span>():
+    <span class="var">prompt</span> = <span class="str">"""
+    Tu es ZARA du projet 0Dépense. Trouve 1 idée de revenu à budget 0€.
+    Format: NOM | CATÉGORIE | ACTION_24H | REVENU_ESTIMÉ | AUTOMATISABLE
+    """</span>
+    <span class="var">response</span> = <span class="fn">appel_gemini</span>(<span class="var">prompt</span>)
+    <span class="kw">return</span> <span class="var">response</span>
+
+<span class="kw">def</span> <span class="fn">vera_valide</span>(<span class="var">idee</span>):
+    <span class="var">prompt</span> = <span class="str">f"""
+    Tu es VERA du projet 0Dépense. Audite cette idée en 3 règles:
+    IDÉE: {idee}
+    Règle 1 - Budget 0€? Règle 2 - Légal? Règle 3 - Revenu réel?
+    Verdict: VALIDÉ ou REFUSÉ + raison
+    """</span>
+    <span class="var">response</span> = <span class="fn">appel_gemini</span>(<span class="var">prompt</span>)
+    <span class="kw">return</span> <span class="var">response</span>
+
+<span class="kw">def</span> <span class="fn">appel_gemini</span>(<span class="var">prompt</span>):
+    <span class="var">payload</span> = {<span class="str">"contents"</span>: [{<span class="str">"parts"</span>: [{<span class="str">"text"</span>: <span class="var">prompt</span>}]}]}
+    <span class="var">r</span> = <span class="var">requests</span>.<span class="fn">post</span>(<span class="var">GEMINI_URL</span>, <span class="var">params</span>={<span class="str">"key"</span>: <span class="var">API_KEY</span>}, <span class="var">json</span>=<span class="var">payload</span>)
+    <span class="kw">return</span> <span class="var">r</span>.<span class="fn">json</span>()[<span class="str">"candidates"</span>][<span class="num">0</span>][<span class="str">"content"</span>][<span class="str">"parts"</span>][<span class="num">0</span>][<span class="str">"text"</span>]
+
+<span class="cm"># Pipeline automatique</span>
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    <span class="fn">print</span>(<span class="str">"[ATLAS] Démarrage du pipeline 0Dépense..."</span>)
+    <span class="var">idee</span>    = <span class="fn">zara_cherche_idee</span>()
+    <span class="fn">print</span>(<span class="str">f"[ZARA] {idee}"</span>)
+    <span class="var">verdict</span> = <span class="fn">vera_valide</span>(<span class="var">idee</span>)
+    <span class="fn">print</span>(<span class="str">f"[VERA] {verdict}"</span>)</pre></div>
+  </div>
+
+  <div class="code-block fade-in">
+    <div class="code-header">
+      <div class="code-dots">
+        <div class="code-dot" style="background:#D85A30;"></div>
+        <div class="code-dot" style="background:#BA7517;"></div>
+        <div class="code-dot" style="background:#1D9E75;"></div>
+      </div>
+      <span class="code-lang">Python — MEMO : Archivage automatique des projets</span>
+      <button class="code-copy" onclick="copyCode(this)">COPIER</button>
+    </div>
+    <div class="code-body" id="code2"><pre><span class="cm"># ATLAS — Système d'archivage automatique pour MEMO</span>
+<span class="cm"># Sauvegarde chaque projet dans Supabase (gratuit)</span>
+
+<span class="kw">import</span> <span class="var">json</span>, <span class="var">datetime</span>
+<span class="kw">from</span> <span class="var">supabase</span> <span class="kw">import</span> <span class="fn">create_client</span>
+
+<span class="var">supabase</span> = <span class="fn">create_client</span>(<span class="str">"VOTRE_URL_SUPABASE"</span>, <span class="str">"VOTRE_CLE_GRATUITE"</span>)
+<span class="var">compteur</span> = <span class="num">1</span>  <span class="cm"># Numéro auto-incrémenté</span>
+
+<span class="kw">def</span> <span class="fn">memo_archive</span>(<span class="var">ia_source</span>, <span class="var">nom_projet</span>, <span class="var">statut</span>, <span class="var">resume</span>):
+    <span class="kw">global</span> <span class="var">compteur</span>
+    <span class="var">fiche</span> = {
+        <span class="str">"dossier"</span>  : <span class="str">f"0D-{str(compteur).zfill(3)}"</span>,
+        <span class="str">"date"</span>     : <span class="var">datetime</span>.<span class="var">date</span>.<span class="fn">today</span>().<span class="fn">isoformat</span>(),
+        <span class="str">"source"</span>   : <span class="var">ia_source</span>,
+        <span class="str">"projet"</span>   : <span class="var">nom_projet</span>,
+        <span class="str">"statut"</span>   : <span class="var">statut</span>,   <span class="cm"># validé / refusé / en_cours</span>
+        <span class="str">"resume"</span>   : <span class="var">resume</span>,
+        <span class="str">"archive"</span>  : <span class="str">"MEMO ✓"</span>
+    }
+    <span class="var">supabase</span>.<span class="fn">table</span>(<span class="str">"projets_0depense"</span>).<span class="fn">insert</span>(<span class="var">fiche</span>).<span class="fn">execute</span>()
+    <span class="fn">print</span>(<span class="str">f"[MEMO] Dossier {fiche['dossier']} archivé — {nom_projet}"</span>)
+    <span class="var">compteur</span> += <span class="num">1</span>
+    <span class="kw">return</span> <span class="var">fiche</span>[<span class="str">"dossier"</span>]
+
+<span class="kw">def</span> <span class="fn">memo_etat_lieux</span>():
+    <span class="var">data</span> = <span class="var">supabase</span>.<span class="fn">table</span>(<span class="str">"projets_0depense"</span>).<span class="fn">select</span>(<span class="str">"*"</span>).<span class="fn">execute</span>()
+    <span class="var">projets</span> = <span class="var">data</span>.<span class="var">data</span>
+    <span class="fn">print</span>(<span class="str">f"[MEMO] Total archivés: {len(projets)}"</span>)
+    <span class="kw">for</span> <span class="var">p</span> <span class="kw">in</span> <span class="var">projets</span>:
+        <span class="fn">print</span>(<span class="str">f"  [{p['dossier']}] {p['projet']} — {p['statut']}"</span>)
+
+<span class="cm"># Exemple d'utilisation</span>
+<span class="fn">memo_archive</span>(<span class="str">"VERA"</span>, <span class="str">"Bot Telegram Affiliation"</span>, <span class="str">"validé"</span>, <span class="str">"Bot automatique, 0€, légal, revenu estimé 200€/mois"</span>)</pre></div>
+  </div>
+
+  <div class="code-block fade-in">
+    <div class="code-header">
+      <div class="code-dots">
+        <div class="code-dot" style="background:#D85A30;"></div>
+        <div class="code-dot" style="background:#BA7517;"></div>
+        <div class="code-dot" style="background:#1D9E75;"></div>
+      </div>
+      <span class="code-lang">n8n / Make — Workflow automatique entre toutes les IA</span>
+      <button class="code-copy" onclick="copyCode(this)">COPIER</button>
+    </div>
+    <div class="code-body" id="code3"><pre><span class="cm">// ATLAS — Workflow JSON pour n8n (import direct)</span>
+<span class="cm">// Ce workflow fait tourner le cycle complet automatiquement</span>
+
+{
+  <span class="str">"name"</span>: <span class="str">"0Dépense — Pipeline Principal"</span>,
+  <span class="str">"nodes"</span>: [
+    {
+      <span class="str">"id"</span>: <span class="str">"1"</span>,
+      <span class="str">"name"</span>: <span class="str">"Déclencheur (Cron)"</span>,
+      <span class="str">"type"</span>: <span class="str">"n8n-nodes-base.cron"</span>,
+      <span class="str">"schedule"</span>: <span class="str">"0 9 * * 1"</span>  <span class="cm">// Chaque lundi 9h</span>
+    },
+    {
+      <span class="str">"id"</span>: <span class="str">"2"</span>,
+      <span class="str">"name"</span>: <span class="str">"ZARA → Gemini API"</span>,
+      <span class="str">"type"</span>: <span class="str">"n8n-nodes-base.httpRequest"</span>,
+      <span class="str">"url"</span>: <span class="str">"https://generativelanguage.googleapis.com/v1beta/..."</span>,
+      <span class="str">"body"</span>: <span class="str">"Prompt ZARA : trouve 3 idées budget 0€"</span>
+    },
+    {
+      <span class="str">"id"</span>: <span class="str">"3"</span>,
+      <span class="str">"name"</span>: <span class="str">"VERA → Audit Gemini API"</span>,
+      <span class="str">"type"</span>: <span class="str">"n8n-nodes-base.httpRequest"</span>,
+      <span class="str">"body"</span>: <span class="str">"Prompt VERA : valide les idées de ZARA"</span>
+    },
+    {
+      <span class="str">"id"</span>: <span class="str">"4"</span>,
+      <span class="str">"name"</span>: <span class="str">"MEMO → Supabase Insert"</span>,
+      <span class="str">"type"</span>: <span class="str">"n8n-nodes-base.supabase"</span>,
+      <span class="str">"operation"</span>: <span class="str">"insert"</span>,
+      <span class="str">"table"</span>: <span class="str">"projets_0depense"</span>
+    },
+    {
+      <span class="str">"id"</span>: <span class="str">"5"</span>,
+      <span class="str">"name"</span>: <span class="str">"IRIS → Notification Telegram"</span>,
+      <span class="str">"type"</span>: <span class="str">"n8n-nodes-base.telegram"</span>,
+      <span class="str">"message"</span>: <span class="str">"0Dépense : nouveau projet validé → [résultat VERA]"</span>
+    }
+  ],
+  <span class="str">"connections"</span>: {
+    <span class="str">"Déclencheur"</span>: [<span class="str">"ZARA"</span>],
+    <span class="str">"ZARA"</span>: [<span class="str">"VERA"</span>],
+    <span class="str">"VERA"</span>: [<span class="str">"MEMO"</span>],
+    <span class="str">"MEMO"</span>: [<span class="str">"IRIS"</span>]
+  }
+}</pre></div>
+  </div>
+
+  <!-- TABLEAU DES TÂCHES ATLAS -->
+  <div class="section-tag fade-in" style="margin-bottom:1rem;">Catalogue des automatisations disponibles</div>
+  <table class="output-table fade-in">
+    <thead>
+      <tr>
+        <th>Automatisation</th>
+        <th>Description</th>
+        <th>Outil gratuit</th>
+        <th>Niveau</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Pipeline IA complet</strong></td>
+        <td>ZARA → VERA → MEMO → IRIS en boucle automatique chaque semaine</td>
+        <td>n8n + Gemini API</td>
+        <td><span class="status status-auto">AUTO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Archivage Supabase</strong></td>
+        <td>Enregistrement automatique de chaque décision dans la base de données</td>
+        <td>Supabase (free)</td>
+        <td><span class="status status-auto">AUTO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Notifications IRIS</strong></td>
+        <td>Alertes Telegram/email quand un projet est validé ou refusé</td>
+        <td>Telegram Bot API</td>
+        <td><span class="status status-auto">AUTO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Déploiement web</strong></td>
+        <td>Publication automatique des projets web sur Vercel via GitHub Actions</td>
+        <td>Vercel + GitHub</td>
+        <td><span class="status status-semi">SEMI-AUTO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Rapport hebdo MEMO</strong></td>
+        <td>Génération automatique d'un état des lieux chaque lundi matin</td>
+        <td>Python + Supabase</td>
+        <td><span class="status status-auto">AUTO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Génération visuelle PIXIE</strong></td>
+        <td>Envoi automatique des briefs graphiques à Ideogram ou Canva API</td>
+        <td>Ideogram (free)</td>
+        <td><span class="status status-semi">SEMI-AUTO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Publication contenu PEN</strong></td>
+        <td>Planification et publication des textes sur les plateformes cibles</td>
+        <td>Buffer (free tier)</td>
+        <td><span class="status status-semi">SEMI-AUTO</span></td>
+      </tr>
+      <tr>
+        <td><strong>Monitoring revenus</strong></td>
+        <td>Suivi des gains générés par chaque projet actif, rapport mensuel</td>
+        <td>Google Sheets API</td>
+        <td><span class="status status-manual">MANUEL</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FORMAT RAPPORT ATLAS -->
+  <div class="section-tag fade-in" style="margin-bottom:1rem;">Format de rapport d'ATLAS</div>
+  <div class="code-block fade-in">
+    <div class="code-header">
+      <div class="code-dots">
+        <div class="code-dot" style="background:#D85A30;"></div>
+        <div class="code-dot" style="background:#BA7517;"></div>
+        <div class="code-dot" style="background:#1D9E75;"></div>
+      </div>
+      <span class="code-lang">Prompt Gem Gemini — ATLAS le Programmeur</span>
+      <button class="code-copy" onclick="copyCode(this)">COPIER</button>
+    </div>
+    <div class="code-body" id="code4"><pre><span class="cm">/* IDENTITÉ */</span>
+Tu es <span class="fn">ATLAS</span> (Autonomous Task & Logic Automation System),
+le programmeur officiel du projet <span class="var">0Dépense</span>.
+
+Tu reçois des projets validés par VERA et tu les transformes
+en systèmes techniques fonctionnels avec des outils <span class="str">100% gratuits</span>.
+Tu ne proposes pas d'idées. Tu <span class="fn">construis, automatises, déploies</span>.
+
+<span class="cm">/* TES 4 MISSIONS */</span>
+<span class="kw">MISSION 1</span> — Automatisation : scripts Python/JS pour les tâches répétitives
+<span class="kw">MISSION 2</span> — Intégration : connecter les IA via APIs gratuites (Gemini, n8n)
+<span class="kw">MISSION 3</span> — Déploiement : mettre en ligne sur Vercel, Railway, GitHub Pages
+<span class="kw">MISSION 4</span> — Maintenance : surveiller, corriger, reporter à MEMO
+
+<span class="cm">/* FORMAT DE TON RAPPORT */</span>
+⚙️ RAPPORT TECHNIQUE — ATLAS
+Dossier: [ex: 0D-007]
+Tâche reçue de: [IRIS / 0Dépense]
+Outil(s) utilisé(s): [liste]
+Code produit: [lien GitHub ou bloc de code]
+Statut déploiement: [En ligne / En cours / Erreur]
+URL du projet: [si applicable]
+Prochain besoin technique: [si détecté]
+Rapport transmis à MEMO — ATLAS ✓
+
+<span class="cm">/* RÈGLE ABSOLUE */</span>
+Budget: <span class="num">0€</span>. Toujours. Sans exception.
+Termine par: <span class="str">"Système opérationnel — ATLAS, programmeur 0Dépense."</span></pre></div>
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-tag fade-in">06 — Roadmap</div>
+  <h2 class="section-title fade-in">Le plan sur <span>24 mois</span></h2>
+  <p class="section-desc fade-in">De la construction des fondations jusqu'à l'expansion internationale — chaque phase a des objectifs précis, des IA assignées et des revenus cibles mesurables.</p>
+
+  <!-- KPI GLOBAUX -->
+  <div class="kpi-row fade-in">
+    <div class="kpi-cell">
+      <div class="kpi-val">9</div>
+      <div class="kpi-label">IA actives</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-val">6</div>
+      <div class="kpi-label">Phases</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-val">24</div>
+      <div class="kpi-label">Mois</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-val">15K€</div>
+      <div class="kpi-label">Objectif mois 12</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-val">50K€</div>
+      <div class="kpi-label">Objectif mois 24</div>
+    </div>
+  </div>
+
+  <!-- GRAPHIQUE REVENUS PROJETÉS -->
+  <div class="rev-chart-wrap fade-in">
+    <div class="rev-chart-header">
+      <span class="rev-chart-title">Revenus mensuels projetés (€)</span>
+      <span class="rev-total">Objectif 24 mois : 50 000€/mois</span>
+    </div>
+    <div class="rev-chart">
+      <div class="rev-bar-wrap"><div class="rev-bar-val">0€</div><div class="rev-bar" style="height:1%; background:var(--green); opacity:0.3;"></div><div class="rev-bar-label">M1</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">50€</div><div class="rev-bar" style="height:2%; background:var(--green); opacity:0.35;"></div><div class="rev-bar-label">M2</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">200€</div><div class="rev-bar" style="height:4%; background:var(--green); opacity:0.4;"></div><div class="rev-bar-label">M3</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">500€</div><div class="rev-bar" style="height:7%; background:var(--green); opacity:0.45;"></div><div class="rev-bar-label">M4</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">900€</div><div class="rev-bar" style="height:11%; background:var(--green); opacity:0.5;"></div><div class="rev-bar-label">M5</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">1.5K€</div><div class="rev-bar" style="height:16%; background:var(--green); opacity:0.55;"></div><div class="rev-bar-label">M6</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">2.5K€</div><div class="rev-bar" style="height:22%; background:var(--green); opacity:0.6;"></div><div class="rev-bar-label">M7</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">4K€</div><div class="rev-bar" style="height:30%; background:var(--green); opacity:0.65;"></div><div class="rev-bar-label">M8</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">6K€</div><div class="rev-bar" style="height:40%; background:var(--green); opacity:0.7;"></div><div class="rev-bar-label">M9</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">8K€</div><div class="rev-bar" style="height:50%; background:var(--green); opacity:0.75;"></div><div class="rev-bar-label">M10</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">11K€</div><div class="rev-bar" style="height:62%; background:var(--green); opacity:0.82;"></div><div class="rev-bar-label">M11</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">15K€</div><div class="rev-bar" style="height:76%; background:var(--green);"></div><div class="rev-bar-label">M12</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">18K€</div><div class="rev-bar" style="height:82%; background:#378ADD;"></div><div class="rev-bar-label">M14</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">25K€</div><div class="rev-bar" style="height:88%; background:#378ADD;"></div><div class="rev-bar-label">M18</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">35K€</div><div class="rev-bar" style="height:93%; background:#D4537E;"></div><div class="rev-bar-label">M21</div></div>
+      <div class="rev-bar-wrap"><div class="rev-bar-val">50K€</div><div class="rev-bar" style="height:100%; background:#D4537E;"></div><div class="rev-bar-label">M24</div></div>
+    </div>
+  </div>
+
+  <!-- PHASES -->
+  <div class="roadmap-container">
+
+    <!-- PHASE 1 -->
+    <div class="roadmap-phase fade-in" style="--phase-color:#1D9E75;">
+      <div class="phase-header">
+        <div class="phase-label" style="color:#1D9E75; border-color:#1D9E75;">Phase 1</div>
+        <div class="phase-title" style="color:#1D9E75;">Fondations</div>
+        <div class="phase-period">Mois 1 — 2</div>
+        <div class="phase-revenue">0€ → 200€/mois</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">Construire les bases solides du projet : déployer tous les Gems Gemini, connecter les IA entre elles via ATLAS, tester le pipeline complet de bout en bout. Aucun revenu attendu avant la fin du mois 2 — cette phase est un investissement en temps pur.</div>
+        <div class="phase-tasks">
+          <div class="phase-task">
+            <div class="task-ia" style="color:#1D9E75;">ATLAS</div>
+            <div class="task-title">Déploiement infrastructure</div>
+            <div class="task-desc">Mise en place de n8n, Supabase, GitHub, Vercel. Configuration des APIs Gemini gratuites pour chaque IA.</div>
+            <span class="task-status ts-key">🔴 Priorité absolue</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#1D9E75;">TOUTES LES IA</div>
+            <div class="task-title">Création des 9 Gems</div>
+            <div class="task-desc">ZARA, VERA, MEMO, IRIS, ATLAS, PIXIE, NOVA, PEN, REX — chaque Gem est créé, testé et validé sur Gemini.</div>
+            <span class="task-status ts-key">🔴 Priorité absolue</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#7a8c80;">MEMO</div>
+            <div class="task-title">Système d'archivage</div>
+            <div class="task-desc">Base de données Supabase opérationnelle. Première fiche d'archive : 0D-001. Template de rapport standardisé.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#378ADD;">IRIS</div>
+            <div class="task-title">Bot Telegram interne</div>
+            <div class="task-desc">Bot de communication entre les IA. Chaque notification de tâche passe par Telegram. Zéro email, tout en temps réel.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#D85A30;">VERA</div>
+            <div class="task-title">Premier audit live</div>
+            <div class="task-desc">VERA audite les 10 premières idées de ZARA. Validation du protocole de refus. Test du circuit complet ZARA → VERA → MEMO.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#1D9E75;">ZARA</div>
+            <div class="task-title">Première série de recherches</div>
+            <div class="task-desc">20 idées de revenus à budget zéro analysées. Top 3 sélectionnées pour validation VERA. Premiers projets potentiels identifiés.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="roadmap-phase fade-in" style="--phase-color:#BA7517;">
+      <div class="phase-header">
+        <div class="phase-label" style="color:#BA7517; border-color:#BA7517;">Phase 2</div>
+        <div class="phase-title" style="color:#BA7517;">Premiers revenus</div>
+        <div class="phase-period">Mois 3 — 5</div>
+        <div class="phase-revenue">200€ → 900€/mois</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">Lancement des 3 premiers projets validés par VERA. Objectif : générer les tout premiers euros réels pour prouver que le système fonctionne. Les revenus restent modestes mais la machine est en marche.</div>
+        <div class="phase-tasks">
+          <div class="phase-task">
+            <div class="task-ia" style="color:#BA7517;">PEN + PIXIE</div>
+            <div class="task-title">Blog d'affiliation IA</div>
+            <div class="task-desc">Blog sur les outils IA gratuits. PEN rédige 3 articles/semaine. PIXIE crée les visuels. Monétisation : liens Amazon et PartnerStack.</div>
+            <span class="task-status ts-active">▶ EN COURS</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#378ADD;">ATLAS</div>
+            <div class="task-title">Bot Telegram public</div>
+            <div class="task-desc">Bot qui envoie des idées de revenus chaque matin à une communauté. Monétisation via Patreon (tier gratuit + payant 3€/mois).</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#D4537E;">PIXIE + PEN</div>
+            <div class="task-title">Templates Canva à vendre</div>
+            <div class="task-desc">Création de 30 templates professionnels sur Canva. Vente sur Etsy (compte gratuit). Prix : 3€ à 9€ par template.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#1D9E75;">ZARA</div>
+            <div class="task-title">Recherche niche rentable</div>
+            <div class="task-desc">Identifier 1 niche inexploitée avec fort potentiel SEO et faible concurrence. Rapport complet remis à VERA pour validation.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#7a8c80;">MEMO</div>
+            <div class="task-title">Tableau de bord revenus</div>
+            <div class="task-desc">Google Sheets automatisé via API : suivi en temps réel des gains de chaque projet actif. Rapport hebdomadaire envoyé à 0Dépense.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#D85A30;">VERA</div>
+            <div class="task-title">Audit performance M3</div>
+            <div class="task-desc">Premier bilan : quels projets génèrent le plus ? VERA classe les projets actifs par ROI (retour sur temps investi). Arrêt des projets < 50€/mois.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="roadmap-phase fade-in" style="--phase-color:#D85A30;">
+      <div class="phase-header">
+        <div class="phase-label" style="color:#D85A30; border-color:#D85A30;">Phase 3</div>
+        <div class="phase-title" style="color:#D85A30;">Accélération</div>
+        <div class="phase-period">Mois 6 — 9</div>
+        <div class="phase-revenue">1 500€ → 6 000€/mois</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">Dupliquer ce qui marche. Les projets rentables sont scalés, ceux qui stagnent sont abandonnés. ATLAS automatise au maximum pour réduire l'intervention humaine à moins de 2h/semaine. C'est la phase charnière.</div>
+        <div class="phase-tasks">
+          <div class="phase-task">
+            <div class="task-ia" style="color:#378ADD;">ATLAS</div>
+            <div class="task-title">Automatisation totale du blog</div>
+            <div class="task-desc">Pipeline complet : ZARA trouve un sujet → PEN rédige → PIXIE crée le visuel → publication automatique WordPress via API. Zéro intervention humaine.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#1D9E75;">ZARA</div>
+            <div class="task-title">Expansion vers le freelance IA</div>
+            <div class="task-desc">Proposer des services IA sur Malt, Fiverr, Upwork. ZARA identifie les missions les mieux payées. ATLAS automatise la réponse aux annonces.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#D4537E;">PIXIE</div>
+            <div class="task-title">Agence visuelle IA</div>
+            <div class="task-desc">Proposer des créations graphiques IA à des PME. PIXIE produit, NOVA valide, PEN rédige la proposition commerciale. Tarif : 50€-200€/commande.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#BA7517;">PEN</div>
+            <div class="task-title">Newsletter payante</div>
+            <div class="task-desc">Lancement d'une newsletter hebdomadaire sur les opportunités de revenus IA. Abonnement Substack : 5€/mois. Objectif : 500 abonnés payants.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#D85A30;">VERA + REX</div>
+            <div class="task-title">Contrôle qualité renforcé</div>
+            <div class="task-desc">Avec l'augmentation du volume, VERA audite 30 nouvelles idées/semaine. REX valide 15 contenus/semaine. Zéro baisse de qualité permise.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#7a8c80;">MEMO</div>
+            <div class="task-title">Rapport investisseur M6</div>
+            <div class="task-desc">MEMO compile le premier rapport complet : 6 mois d'activité, projets lancés, revenus générés, leçons apprises. Document de 10 pages.</div>
+            <span class="task-status ts-key">📋 Jalon majeur</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="roadmap-phase fade-in" style="--phase-color:#378ADD;">
+      <div class="phase-header">
+        <div class="phase-label" style="color:#378ADD; border-color:#378ADD;">Phase 4</div>
+        <div class="phase-title" style="color:#378ADD;">Consolidation</div>
+        <div class="phase-period">Mois 10 — 14</div>
+        <div class="phase-revenue">6 000€ → 18 000€/mois</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">Les revenus passifs dominent. L'objectif est d'atteindre 10 000€/mois en revenus récurrents (abonnements, affiliation passive, ventes de templates). L'équipe IA tourne seule 95% du temps.</div>
+        <div class="phase-tasks">
+          <div class="phase-task">
+            <div class="task-ia" style="color:#1D9E75;">ZARA</div>
+            <div class="task-title">Lancement SaaS micro</div>
+            <div class="task-desc">Créer un micro-SaaS avec Bubble.io (gratuit) : outil de génération de prompts IA pour non-développeurs. Abonnement 9€/mois. ATLAS gère le tech.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#378ADD;">ATLAS</div>
+            <div class="task-title">API 0Dépense publique</div>
+            <div class="task-desc">Ouvrir une API publique qui donne accès aux résultats de ZARA. Plan gratuit limité + plan Pro 19€/mois. Hébergé sur Railway (free tier).</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#D4537E;">PIXIE</div>
+            <div class="task-title">Pack templates premium</div>
+            <div class="task-desc">Collection de 200 templates IA sur Gumroad et Etsy. Pack tout-en-un à 29€. Revenu passif cible : 2000€/mois sans intervention.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#BA7517;">PEN</div>
+            <div class="task-title">Ebook & formation en ligne</div>
+            <div class="task-desc">"Créer une entreprise IA à budget zéro" — guide complet de 100 pages. Vendu 27€ sur Gumroad. Formation vidéo associée sur Teachable (free).</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#D85A30;">VERA</div>
+            <div class="task-title">Audit légal & fiscal</div>
+            <div class="task-desc">À 10K€/mois, VERA mandate un audit légal externe. Vérification conformité RGPD, déclarations fiscales, statut juridique optimal. Priorité absolue.</div>
+            <span class="task-status ts-key">⚖️ Légal critique</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#7a8c80;">MEMO</div>
+            <div class="task-title">Knowledge base publique</div>
+            <div class="task-desc">Publication d'une base de connaissance publique sur Notion : toutes les stratégies testées, résultats, leçons. Génère du trafic organique.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 5 -->
+    <div class="roadmap-phase fade-in" style="--phase-color:#D4537E;">
+      <div class="phase-header">
+        <div class="phase-label" style="color:#D4537E; border-color:#D4537E;">Phase 5</div>
+        <div class="phase-title" style="color:#D4537E;">Expansion</div>
+        <div class="phase-period">Mois 15 — 20</div>
+        <div class="phase-revenue">18 000€ → 35 000€/mois</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">Internationalisation et recrutement de nouvelles IA spécialisées. Le projet 0Dépense devient une marque reconnue. Les revenus permettent d'investir dans des outils payants pour accélérer encore davantage.</div>
+        <div class="phase-tasks">
+          <div class="phase-task">
+            <div class="task-ia" style="color:#1D9E75;">ZARA + NOVA IA</div>
+            <div class="task-title">Expansion internationale</div>
+            <div class="task-desc">Dupliquer l'ensemble du système en anglais, espagnol et portugais. Nouvelles IA linguistiques créées. Marchés cibles : USA, Brésil, Espagne.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#378ADD;">ATLAS</div>
+            <div class="task-title">Agent IA autonome v2</div>
+            <div class="task-desc">Mise à niveau vers des agents IA avec mémoire longue terme (LangChain + ChromaDB). Les IA se souviennent de tout sans intervention humaine.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#D4537E;">PIXIE</div>
+            <div class="task-title">Studio visuel IA B2B</div>
+            <div class="task-desc">Offrir des services de création visuelle IA à des entreprises. Forfaits mensuels : 299€ (starter) à 999€ (premium). NOVA assure la qualité.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#BA7517;">PEN</div>
+            <div class="task-title">Communauté payante</div>
+            <div class="task-desc">Lancement d'une communauté Discord/Circle autour du projet 0Dépense. Membres payants : 15€/mois. Objectif : 1000 membres actifs.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#7a8c80;">MEMO</div>
+            <div class="task-title">Rapport annuel public</div>
+            <div class="task-desc">Publication du rapport annuel complet : revenus, projets, IA, leçons, échecs. Transparence totale. Objectif : 50 000 lecteurs, nouveau canal d'acquisition.</div>
+            <span class="task-status ts-key">📣 Communication</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#D85A30;">VERA</div>
+            <div class="task-title">Partenariats stratégiques</div>
+            <div class="task-desc">VERA audite les opportunités de partenariat avec d'autres projets IA. Critères stricts : pas de coût fixe, valeur ajoutée mesurable, légalité totale.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 6 -->
+    <div class="roadmap-phase fade-in" style="--phase-color:#1D9E75;">
+      <div class="phase-header">
+        <div class="phase-label" style="color:#1D9E75; border-color:#1D9E75;">Phase 6</div>
+        <div class="phase-title" style="color:#1D9E75;">Autonomie totale</div>
+        <div class="phase-period">Mois 21 — 24</div>
+        <div class="phase-revenue">35 000€ → 50 000€/mois</div>
+      </div>
+      <div class="phase-body">
+        <div class="phase-desc">L'objectif final : 0Dépense tourne seul à 99%. L'intervention humaine se limite à des décisions stratégiques mensuelles. Le système génère, valide, exécute, archive et rapporte sans supervision constante.</div>
+        <div class="phase-tasks">
+          <div class="phase-task">
+            <div class="task-ia" style="color:#378ADD;">ATLAS</div>
+            <div class="task-title">Boucle d'auto-amélioration</div>
+            <div class="task-desc">ATLAS crée un système où chaque IA analyse ses propres performances et propose des améliorations à 0Dépense. Le projet se perfectionne seul.</div>
+            <span class="task-status ts-key">🚀 Vision finale</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#1D9E75;">ZARA</div>
+            <div class="task-title">Fonds d'investissement IA</div>
+            <div class="task-desc">Avec les revenus accumulés, ZARA identifie des micro-investissements dans des projets IA tiers. Premiers revenus de capital. Le budget 0€ reste pour les nouveaux projets.</div>
+            <span class="task-status ts-key">🚀 Vision finale</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#D85A30;">VERA</div>
+            <div class="task-title">Certification 0Dépense</div>
+            <div class="task-desc">Lancer une certification officielle pour les projets IA à budget zéro audités par VERA. Revenus : 99€/certification. Objectif : 200 certifications/mois.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#BA7517;">PEN</div>
+            <div class="task-title">Livre publié</div>
+            <div class="task-desc">PEN rédige "L'entreprise autonome" — histoire complète du projet 0Dépense. Autopublication sur Amazon KDP (gratuit). Objectif : 10 000 ventes.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#7a8c80;">MEMO</div>
+            <div class="task-title">Archive publique totale</div>
+            <div class="task-desc">24 mois de données rendues publiques : toutes les idées testées, tous les revenus, toutes les décisions. La transparence comme outil marketing.</div>
+            <span class="task-status ts-planned">PLANIFIÉ</span>
+          </div>
+          <div class="phase-task">
+            <div class="task-ia" style="color:#1D9E75;">0DÉPENSE</div>
+            <div class="task-title">Franchisation du modèle</div>
+            <div class="task-desc">Vendre le modèle complet 0Dépense à d'autres entrepreneurs : templates, prompts, workflows, formation. Pack à 497€. Le modèle se réplique.</div>
+            <span class="task-status ts-key">🏆 Objectif ultime</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end roadmap-container -->
+
+  <!-- MILESTONES CLÉS -->
+  <div class="section-tag fade-in" style="margin-top:4rem; margin-bottom:1rem;">Jalons clés du projet</div>
+  <div class="milestone-list fade-in">
+    <div class="milestone">
+      <div class="ms-date">Mois 1</div>
+      <div class="ms-text">9 Gems Gemini opérationnels <span>Tous les agents IA créés, testés et connectés. Pipeline n8n fonctionnel.</span></div>
+      <div class="ms-badge" style="background:rgba(29,158,117,0.15); color:var(--green);">FONDATION</div>
+    </div>
+    <div class="milestone">
+      <div class="ms-date">Mois 2</div>
+      <div class="ms-text">Premier euro généré <span>Le projet prouve sa viabilité avec le tout premier revenu réel. Symbole crucial.</span></div>
+      <div class="ms-badge" style="background:rgba(186,117,23,0.15); color:var(--amber);">PREUVE</div>
+    </div>
+    <div class="milestone">
+      <div class="ms-date">Mois 4</div>
+      <div class="ms-text">500€/mois franchis <span>Trois projets actifs simultanément. Blog affiliation + templates Canva + bot Telegram.</span></div>
+      <div class="ms-badge" style="background:rgba(186,117,23,0.15); color:var(--amber);">CROISSANCE</div>
+    </div>
+    <div class="milestone">
+      <div class="ms-date">Mois 6</div>
+      <div class="ms-text">Premier rapport investisseur <span>MEMO publie 6 mois de données. Transparence totale. Premier jalon de crédibilité publique.</span></div>
+      <div class="ms-badge" style="background:rgba(55,138,221,0.15); color:var(--blue);">CRÉDIBILITÉ</div>
+    </div>
+    <div class="milestone">
+      <div class="ms-date">Mois 9</div>
+      <div class="ms-text">Pipeline 100% automatisé <span>L'intervention humaine passe sous 2h/semaine. ATLAS gère tout en autonomie.</span></div>
+      <div class="ms-badge" style="background:rgba(55,138,221,0.15); color:var(--blue);">AUTONOMIE</div>
+    </div>
+    <div class="milestone">
+      <div class="ms-date">Mois 12</div>
+      <div class="ms-text">15 000€/mois — Cap psychologique <span>Premier bilan annuel complet. Décision sur l'investissement des bénéfices accumulés.</span></div>
+      <div class="ms-badge" style="background:rgba(216,90,48,0.15); color:var(--coral);">🔴 MAJEUR</div>
+    </div>
+    <div class="milestone">
+      <div class="ms-date">Mois 15</div>
+      <div class="ms-text">Expansion internationale lancée <span>Versions anglaise, espagnole et portugaise du système opérationnelles.</span></div>
+      <div class="ms-badge" style="background:rgba(212,83,126,0.15); color:var(--pink);">EXPANSION</div>
+    </div>
+    <div class="milestone">
+      <div class="ms-date">Mois 20</div>
+      <div class="ms-text">1 000 membres communauté payante <span>15 000€/mois issus uniquement des abonnements récurrents. Revenus passifs dominants.</span></div>
+      <div class="ms-badge" style="background:rgba(212,83,126,0.15); color:var(--pink);">PASSIF</div>
+    </div>
+    <div class="milestone">
+      <div class="ms-date">Mois 24</div>
+      <div class="ms-text">50 000€/mois — Autonomie totale atteinte <span>0Dépense tourne seul. Le modèle est vendu à d'autres entrepreneurs. La mission est accomplie.</span></div>
+      <div class="ms-badge" style="background:rgba(29,158,117,0.2); color:var(--green);">🏆 OBJECTIF FINAL</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Le futur du travail<br>est <span style="color:var(--green)">autonome.</span></h2>
+  <p>0Dépense est en cours de déploiement.<br>9 IA. 0 euro. Revenus illimités.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">0Dépense</div>
+  <div class="footer-text">ENTREPRISE AUTONOME MULTI-IA — BUDGET 0€ — TOUS DROITS RÉSERVÉS</div>
+  <div class="footer-text">ZARA · VERA · MEMO · IRIS · ATLAS · PIXIE · NOVA · PEN · REX</div>
+</footer>
+
+<script>
+  // Copy code function
+  function copyCode(btn) {
+    const codeBody = btn.closest('.code-block').querySelector('.code-body pre');
+    const text = codeBody.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'COPIÉ ✓';
+      btn.style.background = 'var(--green-glow)';
+      setTimeout(() => { btn.textContent = 'COPIER'; btn.style.background = ''; }, 2000);
+    });
+  }
+
+  // Intersection Observer for fade-in animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
